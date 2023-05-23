@@ -14,4 +14,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 build:
-	docker image build --platform linux/amd64 -t hutschen/doc-audit:latest .
+	docker image build -t hutschen/doc-audit:latest .
+
+cmd:
+	docker container rm -f doc-audit
+	docker container run -it --name doc-audit \
+		-p 4200:8000 \
+		-v $(shell pwd)/config.yml:/usr/src/api/config.yml \
+		--entrypoint '/bin/bash' hutschen/doc-audit
+
+run:
+	docker container rm -f doc-audit
+	docker container create --name doc-audit -p 4200:8000 hutschen/doc-audit
+	docker container cp config.yml doc-audit:/usr/src/api/config.yml
+	docker container start doc-audit
