@@ -1,0 +1,6 @@
+[submodule "doc-audit-api"]
+	path = doc-audit-api
+	url = git@github.com:hutschen/doc-audit-api.git
+[submodule "doc-audit-ng"]
+	path = doc-audit-ng
+	url = git@github.com:hutschen/doc-audit-ng.git
