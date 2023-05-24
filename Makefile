@@ -28,3 +28,10 @@ run:
 	docker container create --name doc-audit -p 4200:8000 hutschen/doc-audit
 	docker container cp config.yml doc-audit:/usr/src/api/config.yml
 	docker container start doc-audit
+
+push:
+	docker image push hutschen/doc-audit
+
+tag:
+	docker image tag hutschen/doc-audit hutschen/doc-audit:$(tag)
+	docker image push hutschen/doc-audit:$(tag)
