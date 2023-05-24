@@ -35,3 +35,6 @@ push:
 tag:
 	docker image tag hutschen/doc-audit hutschen/doc-audit:$(tag)
 	docker image push hutschen/doc-audit:$(tag)
+
+submodules-update:
+	git submodule update --init --recursive
