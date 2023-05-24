@@ -55,4 +55,7 @@ ENV PATH="/venv/bin:$PATH"
 COPY ./doc-audit-api ./
 COPY --from=ng_build /usr/src/ng/dist/docaudit ./htdocs
 
+# Download NLTK punkt model
+RUN python -c "import nltk; nltk.download('punkt')"
+
 ENTRYPOINT [ "python", "-u", "serve.py"]
