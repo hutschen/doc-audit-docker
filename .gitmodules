@@ -1,0 +1,9 @@
+[submodule "doc-audit-api"]
+	path = doc-audit-api
+	url = git@github.com:hutschen/doc-audit-api.git
+[submodule "doc-audit-ng"]
+	path = doc-audit-ng
+	url = git@github.com:hutschen/doc-audit-ng.git
+[submodule "gbert-large-paraphrase-cosine"]
+	path = gbert-large-paraphrase-cosine
+	url = git@hf.co:deutsche-telekom/gbert-large-paraphrase-cosine

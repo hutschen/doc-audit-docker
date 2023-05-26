@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"licenser.license": "AGPLv3",
+		"licenser.projectName": "DocAudit",
+		"python.analysis.typeCheckingMode": "basic"
+	}
+}
