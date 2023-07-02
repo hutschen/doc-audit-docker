@@ -25,8 +25,10 @@ cmd:
 
 run:
 	docker container rm -f doc-audit
-	docker container create --name doc-audit -p 4200:8000 hutschen/doc-audit
-	docker container cp config.yml doc-audit:/usr/src/api/config.yml
+	docker container create --name doc-audit \
+		-p 4200:8000 \
+		-v $(shell pwd)/gbert-large-paraphrase-cosine:/usr/src/gbert-large-paraphrase-cosine \
+		-v $(shell pwd)/config.yml:/usr/src/api/config.yml hutschen/doc-audit
 	docker container start doc-audit
 
 push:
