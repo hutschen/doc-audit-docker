@@ -19,8 +19,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          lfs: true
+          lfs: false # disable git-lfs to avoid checkout model files
           submodules: 'recursive'
+
+      - name: Clean up model directory
+        run: rm -rf gbert-large-paraphrase-cosine/*
 
       - name: Set Docker Tag
         id: docker_tag
