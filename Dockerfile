@@ -49,9 +49,6 @@ RUN pip3 install --no-cache-dir pipenv \
 FROM python:3.10-slim
 WORKDIR /usr/src/api
 
-# Copy model files
-COPY ./gbert-large-paraphrase-cosine ../gbert-large-paraphrase-cosine
-
 # Copy virtual environment
 COPY --from=api_build /venv /venv
 ENV PATH="/venv/bin:$PATH"
