@@ -1,4 +1,4 @@
-# Copyright (C) 2023 Helmar Hutschenreuter
+# Copyright (C) 2024 Helmar Hutschenreuter
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -13,23 +13,26 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-build:
-	docker compose build --no-cache app
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hutschen/doc-audit:latest
+    volumes:
+      - ./config.yml:/usr/src/api/config.yml
+      - ./gbert-large-paraphrase-cosine:/usr/src/gbert-large-paraphrase-cosine
+    ports:
+      - 8000:8000
 
-up:
-	@if [ ! -f config.yml ]; then cp config.example.yml config.yml; fi
-	docker-compose up app -d
-
-down:
-	docker compose down
-
-pytest:
-	@if [ ! -f config.yml ]; then cp config.example.yml config.yml; fi
-	docker compose up pytest
-	docker compose down pytest
-
-cleanup:
-	docker-compose down --volumes --rmi all
-
-submodules-update:
-	git submodule update --init --recursive
+  pytest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hutschen/doc-audit:latest
+    volumes:
+      - ./config.yml:/usr/src/api/config.yml
+      - ./gbert-large-paraphrase-cosine:/usr/src/gbert-large-paraphrase-cosine
+    entrypoint: /bin/sh
+    command: -c 'pip install pytest && pytest'

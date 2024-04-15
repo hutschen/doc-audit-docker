@@ -1,0 +1,6 @@
+database:
+  url: sqlite:///docaudit.db
+uvicorn:
+  port: 8000
+  log_level: info
+  log_filename: null
