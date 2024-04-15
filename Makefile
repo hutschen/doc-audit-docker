@@ -14,29 +14,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 build:
-	docker image build -t hutschen/doc-audit:latest .
+	docker compose build --no-cache app
 
-cmd:
-	docker container rm -f doc-audit
-	docker container run -it --name doc-audit \
-		-p 4200:8000 \
-		-v $(shell pwd)/config.yml:/usr/src/api/config.yml \
-		--entrypoint '/bin/bash' hutschen/doc-audit
+up:
+	@if [ ! -f config.yml ]; then cp config.example.yml config.yml; fi
+	docker-compose up app -d
 
-run:
-	docker container rm -f doc-audit
-	docker container create --name doc-audit \
-		-p 4200:8000 \
-		-v $(shell pwd)/gbert-large-paraphrase-cosine:/usr/src/gbert-large-paraphrase-cosine \
-		-v $(shell pwd)/config.yml:/usr/src/api/config.yml hutschen/doc-audit
-	docker container start doc-audit
+down:
+	docker compose down
 
-push:
-	docker image push hutschen/doc-audit
+pytest:
+	@if [ ! -f config.yml ]; then cp config.example.yml config.yml; fi
+	docker compose up pytest
+	docker compose down pytest
 
-tag:
-	docker image tag hutschen/doc-audit hutschen/doc-audit:$(tag)
-	docker image push hutschen/doc-audit:$(tag)
+cleanup:
+	docker-compose down --volumes --rmi all
 
 submodules-update:
 	git submodule update --init --recursive
