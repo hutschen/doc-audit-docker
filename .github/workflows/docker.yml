@@ -30,7 +30,9 @@ jobs:
           elif [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
             echo "tag=develop" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == refs/heads/release/* || "${{ github.ref }}" == refs/heads/hotfix/* || "${{ github.ref }}" == refs/heads/bugfix/* ]]; then
-            echo "tag=$(echo ${GITHUB_REF#refs/heads/})-rc" >> $GITHUB_ENV
+            REF=${GITHUB_REF#refs/heads/}
+            VERSION=${REF#*/}
+            echo "tag=${VERSION}-rc" >> $GITHUB_ENV
           else
             echo "tag=${{ github.ref_name }}" >> $GITHUB_ENV
           fi
@@ -50,6 +52,6 @@ jobs:
           context: .
           push: true
           tags: hutschen/doc-audit:${{ env.tag }}
-          cache-from: type=registry,ref=hutschen/caches:doc-audit
-          cache-to: type=registry,ref=hutschen/caches:doc-audit,mode=max
+          # cache-from: type=registry,ref=hutschen/caches:doc-audit
+          # cache-to: type=registry,ref=hutschen/caches:doc-audit,mode=max
           platforms: linux/amd64
