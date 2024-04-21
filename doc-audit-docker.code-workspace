@@ -5,8 +5,7 @@
 		}
 	],
 	"settings": {
+		"files.eol": "\n",
 		"licenser.license": "AGPLv3",
-		"licenser.projectName": "DocAudit",
-		"python.analysis.typeCheckingMode": "basic"
 	}
 }

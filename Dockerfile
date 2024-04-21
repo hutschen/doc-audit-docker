@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Angular build
 FROM node:18.14.1-alpine3.17 AS ng_build
 WORKDIR /usr/src/ng
 
@@ -24,14 +25,17 @@ RUN npm clean-install
 COPY ./doc-audit-ng ./
 RUN npm run ng build --optimization
 
+# Python build
 FROM python:3.10-slim AS api_build
-
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    build-essential
+# Update and install build-essential package, then clean up to save space
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
+# Copy Pipfile and Pipfile.lock
 COPY ./doc-audit-api/Pipfile ./doc-audit-api/Pipfile.lock ./
 
 # Install Python dependencies in a virtual environment
@@ -41,11 +45,9 @@ RUN pip3 install --no-cache-dir pipenv \
     && pipenv install --ignore-pipfile --deploy \
     && pip3 uninstall -y pipenv
 
+# Final stage
 FROM python:3.10-slim
 WORKDIR /usr/src/api
-
-# Copy model files
-COPY ./gbert-large-paraphrase-cosine ../gbert-large-paraphrase-cosine
 
 # Copy virtual environment
 COPY --from=api_build /venv /venv
