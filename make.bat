@@ -28,6 +28,7 @@ goto :%1
 
 :submodules-update
     git submodule update --init --recursive
+    git submodule foreach --recursive 'git lfs pull'
     goto :eof
 
 :eof
