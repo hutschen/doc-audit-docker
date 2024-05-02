@@ -54,4 +54,4 @@ jobs:
           tags: hutschen/doc-audit:${{ env.tag }}
           cache-from: type=registry,ref=hutschen/caches:doc-audit
           cache-to: type=registry,ref=hutschen/caches:doc-audit,mode=max
-          platforms: linux/amd64
+          platforms: linux/amd64, linux/arm64
