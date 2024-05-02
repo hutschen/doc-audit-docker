@@ -26,7 +26,7 @@ COPY ./doc-audit-ng ./
 RUN npm run ng build --optimization
 
 # Python build
-FROM python:3.10-slim AS api_build
+FROM python:3.12-slim AS api_build
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and install build-essential package, then clean up to save space
@@ -46,7 +46,7 @@ RUN pip3 install --no-cache-dir pipenv \
     && pip3 uninstall -y pipenv
 
 # Final stage
-FROM python:3.10-slim
+FROM python:3.12-slim
 WORKDIR /usr/src/api
 
 # Copy virtual environment
@@ -56,8 +56,5 @@ ENV PATH="/venv/bin:$PATH"
 # Copy API sources and Angular app build artifacts
 COPY ./doc-audit-api ./
 COPY --from=ng_build /usr/src/ng/dist/docaudit ./htdocs
-
-# Download NLTK punkt model
-RUN python -c "import nltk; nltk.download('punkt')"
 
 ENTRYPOINT [ "python", "-u", "serve.py"]

@@ -1,0 +1,13 @@
+**/.git
+**/.gitignore
+**/.gitmodules
+**/.gitattributes
+**/.gitkeep
+
+**/.vscode
+**/*.code-workspace
+**/Makefile
+**/README.md
+
+**/.devcontainer
+**/gbert-large-paraphrase-cosine
