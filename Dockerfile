@@ -42,6 +42,7 @@ COPY ./doc-audit-api/Pipfile ./doc-audit-api/Pipfile.lock ./
 RUN pip3 install --no-cache-dir pipenv \
     && python3 -m venv /venv \
     && . /venv/bin/activate \
+    && pip3 install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu \
     && pipenv install --ignore-pipfile --deploy \
     && pip3 uninstall -y pipenv
 
