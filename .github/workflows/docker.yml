@@ -32,7 +32,8 @@ jobs:
           elif [[ "${{ github.ref }}" == refs/heads/release/* || "${{ github.ref }}" == refs/heads/hotfix/* || "${{ github.ref }}" == refs/heads/bugfix/* ]]; then
             REF=${GITHUB_REF#refs/heads/}
             VERSION=${REF#*/}
-            echo "tag=${VERSION}-rc" >> $GITHUB_ENV
+            TIMESTAMP=$(date +'%y%m%d%H%M')
+            echo "tag=${VERSION}-rc-${TIMESTAMP}" >> $GITHUB_ENV
           else
             echo "tag=${{ github.ref_name }}" >> $GITHUB_ENV
           fi
