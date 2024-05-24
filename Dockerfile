@@ -52,6 +52,7 @@ WORKDIR /usr/src/api
 
 # Set environment variables
 ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+ENV HAYSTACK_TELEMETRY_ENABLED=False
 
 # Install ca-certificates package
 RUN apt-get update \
