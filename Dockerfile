@@ -50,6 +50,15 @@ RUN pip3 install --no-cache-dir pipenv \
 FROM python:3.12-slim
 WORKDIR /usr/src/api
 
+# Set environment variables
+ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
+# Install ca-certificates package
+RUN apt-get update \
+    && apt-get install -y ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy virtual environment
 COPY --from=api_build /venv /venv
 ENV PATH="/venv/bin:$PATH"
@@ -58,4 +67,5 @@ ENV PATH="/venv/bin:$PATH"
 COPY ./doc-audit-api ./
 COPY --from=ng_build /usr/src/ng/dist/docaudit ./htdocs
 
-ENTRYPOINT [ "python", "-u", "serve.py"]
+# Update CA certificates and start the application
+ENTRYPOINT ["sh", "-c", "update-ca-certificates && exec python -u serve.py"]
