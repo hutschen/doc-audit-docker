@@ -1,5 +1,3 @@
-haystack:
-  embedding_model: gbert-large-paraphrase-cosine
 qdrant:
   host: qdrant
   port: 6333

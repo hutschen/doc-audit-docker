@@ -19,9 +19,11 @@ services:
       context: .
       dockerfile: Dockerfile
     image: hutschen/doc-audit:latest
+    environment:
+      - HF_HOME=/usr/models
     volumes:
       - ./config.yml:/usr/src/api/config.yml
-      - ./doc-audit-api/gbert-large-paraphrase-cosine:/usr/src/api/gbert-large-paraphrase-cosine
+      - models:/usr/models
     ports:
       - 8000:8000
     depends_on:
@@ -41,11 +43,14 @@ services:
       context: .
       dockerfile: Dockerfile
     image: hutschen/doc-audit:latest
+    environment:
+      - HF_HOME=/usr/models
     volumes:
       - ./config.yml:/usr/src/api/config.yml
-      - ./gbert-large-paraphrase-cosine:/usr/src/gbert-large-paraphrase-cosine
+      - models:/usr/models
     entrypoint: /bin/sh
     command: -c 'pip install pytest && pytest'
 
 volumes:
+  models:
   qdrant_data:
